@@ -8,6 +8,7 @@
         dataref="attributes"
         :filter="filtro"
         :loadedcallback="visualizar"
+        :dados="dados"
         >
         <tr>
             <th colspan="2">
@@ -18,7 +19,7 @@
                 <div class="ui right">
                     <div class="ui small input icon right">
                     <i @click="test" class="icon inverted circular search link"></i>
-                    <input v-model="filtro"  type="text" placeholder="Nome, Código">
+                    <input v-model="filtro"  type="text" placeholder="Nome, Código" @keyup.enter="pesquisar">
                 </div>
                 </div>
             </th>
@@ -35,7 +36,8 @@ export default {
   components: {AddItemForm, AppTable},
   data () {
     return {
-      filtro: 0
+      filtro: 0,
+      dados: []
     }
   },
   methods: {
@@ -51,6 +53,14 @@ export default {
     editar (item) {
       console.log(AppTable)
       console.log(item)
+    },
+    // Quando ENTER for pressionado no campo de busca chama a Api
+    // e passa para o componente da tabela
+    pesquisar (e) {
+      this.$http.get('http://localhost:8765/itens?p=' + e.target.value)
+        .then((response) => {
+          this.dados = response.data.dados
+        })
     }
   },
   created () {

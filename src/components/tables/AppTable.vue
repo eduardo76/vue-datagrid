@@ -8,13 +8,13 @@
       <div class="scrollbody attached" ref="table">
           <table :class="classnames + 'attached'">
         <tbody ref="tbody">
-            <tr v-on:dblclick="getItem(item)" v-for="item in data" v-if="dataref != undefined">
+            <tr v-on:dblclick="getItem(item)" v-for="item in dados" v-if="dataref != undefined">
                 <td v-for="title in fields">{{item[dataref][index(title)]}}</td>
             </tr>
-            <tr v-on:dblclick="getItem(item)" v-for="item in data" v-if="dataref === undefined">
+            <tr v-on:dblclick="getItem(item)" v-for="item in dados" v-if="dataref === undefined">
                 <td v-for="title in fields">{{item[index(title)]}}</td>
             </tr>
-            <tr v-if="data.length === 0">
+            <tr v-if="dados.length === 0">
                 <td :colspan="fields.length">
                     <div class="spinner">
                         <div class="bounce1"></div>
@@ -56,7 +56,7 @@ var options = function (mediatype = true, get = true) {
 export default {
   name: 'app-table',
   components: {AddItemForm},
-  props: ['classnames', 'fields', 'itens', 'dataref', 'endpoint', 'thead', 'jsonmedia', 'maxheight', 'maxperpage', 'loadtext', 'loadedcallback', 'getitem', 'filter'],
+  props: ['dados', 'classnames', 'fields', 'itens', 'dataref', 'endpoint', 'thead', 'jsonmedia', 'maxheight', 'maxperpage', 'loadtext', 'loadedcallback', 'getitem', 'filter'],
   data () {
     return {
       data: [],
@@ -151,8 +151,8 @@ export default {
     this.loadTable()
   },
   updated () {
-    this.reloadTable()
-    this.$on('filter', this.data)
+    // this.reloadTable()
+    // this.$on('filter', this.data)
   },
   created () {
   },
